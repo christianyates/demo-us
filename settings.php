@@ -556,6 +556,10 @@ $conf['cache_backends'][] = './sites/default/modules/memcache/memcache.inc';
 $conf['cache_default_class'] = 'MemCacheDrupal';
 $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
 
+$conf['cache'] = '1';
+$conf['preprocess_css'] = '1';
+$conf['preprocess_js'] = '1';
+
 if (file_exists('/var/www/site-php')) {
   require('/var/www/site-php/cyates2/cyates2-settings.inc');
 }
