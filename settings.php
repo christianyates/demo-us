@@ -552,16 +552,35 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  */
 # $conf['allow_authorize_operations'] = FALSE;
 
-$conf['cache_backends'][] = './sites/default/modules/memcache/memcache.inc';
-$conf['cache_default_class'] = 'MemCacheDrupal';
-$conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
-
+// Force caching
 $conf['cache'] = '1';
 $conf['preprocess_css'] = '1';
 $conf['preprocess_js'] = '1';
 $conf['page_cache_maximum_age'] = '300';
 $conf['cache_lifetime'] = '60';
 
+// On Acquia Cloud, this include file configures Drupal to use the correct
+// database in each site environment (Dev, Stage, or Prod). To use this
+// settings.php for development on your local workstation, set $db_url
+// (Drupal 5 or 6) or $databases (Drupal 7) as described in comments above.
 if (file_exists('/var/www/site-php')) {
-  require('/var/www/site-php/cyates2/cyates2-settings.inc');
+  if (preg_match('@([^\.]+)(\.(dev|stage))?\.us\.demo\.acquia\.com$@', $_SERVER['HTTP_HOST'], $match) && file_exists("/var/www/site-php/cyates2/demo_{$match[1]}-settings.inc")) {
+    require("/var/www/site-php/cyates2/demo_{$match[1]}-settings.inc");
+    $conf['file_public_path'] = "sites/default/files/{$match[1]}";
+  }
+  else {
+    require('/var/www/site-php/cyates2/cyates2-settings.inc');
+    $conf['file_public_path'] = "sites/default/files/main";
+  }
+  $conf['cache_backends'][] = 'sites/all/modules/memcache/memcache.inc';
+  $conf['cache_default_class'] = 'MemCacheDrupal';
+  // The 'cache_form' bin must be assigned no non-volatile storage.
+  $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+}
+/**
+ * Include a local settings file if it exists.
+ */
+$local_settings = dirname(__FILE__) . '/settings.local.php';
+if (file_exists($local_settings)) {
+  include $local_settings;
 }
