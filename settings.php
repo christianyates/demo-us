@@ -570,7 +570,7 @@ if (file_exists('/var/www/site-php')) {
   }
   else {
     require('/var/www/site-php/cyates2/cyates2-settings.inc');
-    $conf['file_public_path'] = "sites/default/files/main";
+    // $conf['file_public_path'] = "sites/default/files/main";
   }
   $conf['cache_backends'][] = 'sites/default/modules/memcache/memcache.inc';
   $conf['cache_default_class'] = 'MemCacheDrupal';
