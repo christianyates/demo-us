@@ -554,8 +554,8 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 
 // Force caching
 $conf['cache'] = '1';
-$conf['preprocess_css'] = '1';
-$conf['preprocess_js'] = '1';
+//$conf['preprocess_css'] = '1';
+//$conf['preprocess_js'] = '1';
 $conf['page_cache_maximum_age'] = '300';
 $conf['cache_lifetime'] = '60';
 
