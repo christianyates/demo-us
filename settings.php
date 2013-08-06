@@ -564,7 +564,7 @@ $conf['cache_lifetime'] = '60';
 // settings.php for development on your local workstation, set $db_url
 // (Drupal 5 or 6) or $databases (Drupal 7) as described in comments above.
 if (file_exists('/var/www/site-php')) {
-  if (preg_match('@([^\.]+)(\.(dev|stage))?\.us\.demo\.acquia\.com$@', $_SERVER['HTTP_HOST'], $match) && file_exists("/var/www/site-php/cyates2/demo_{$match[1]}-settings.inc")) {
+  if (preg_match('@([^\.]+)(\.(dev|stage|test))?\.us\.demo\.acquia\.com$@', $_SERVER['HTTP_HOST'], $match) && file_exists("/var/www/site-php/cyates2/demo_{$match[1]}-settings.inc")) {
     require("/var/www/site-php/cyates2/demo_{$match[1]}-settings.inc");
     $conf['file_public_path'] = "sites/default/files/{$match[1]}";
   }
